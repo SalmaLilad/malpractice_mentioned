@@ -1,14 +1,4 @@
 <!-- Malpractice Mentioned - Ready-to-deploy GitHub Pages site (single HTML file)
-     Instructions:
-     1) Save this file as index.html in a new GitHub repository (root). Upload your logo file named `logo.png` to the same repo.
-     2) Commit & push. In the repository Settings -> Pages, enable GitHub Pages from the `main` branch (root) to publish the site. The site will appear at https://<your-username>.github.io/<repo-name>/
-     3) To embed in Google Sites: enable GitHub Pages and then use the published URL in Google Sites -> Embed -> By URL.
-
-     Edit points:
-     - Replace --primary/--accent hex values at the top to perfectly match your logo if needed.
-     - Add/modify case studies in the `caseStudies` JS array below.
-     - Modify chart data in `dataConfig`.
--->
 
 <!doctype html>
 <html lang="en">
@@ -58,7 +48,7 @@
     .charts{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
     .charts canvas{width:100%!important}
 
-    /* Case studies layout similar to provided screenshot */
+    /* Case Studies*/
     section.case-grid{margin-top:18px}
     .case-grid-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
     .case-item{padding:20px;border-radius:10px;background:linear-gradient(180deg,#fff, var(--muted));min-height:200px;display:flex;flex-direction:column;justify-content:flex-start}
@@ -197,7 +187,7 @@
       { name: 'More entries', issue: 'Add as needed', story: 'Add real case studies by editing the array in the file.', image: null }
     ];
 
-    /* ============ Render case studies ============= */
+    /* Render Case Studies */
     function renderCases(){
       const grid = document.getElementById('caseGrid');
       grid.innerHTML = '';
@@ -222,7 +212,7 @@
 
     renderCases();
 
-    /* ============ Charts ============= */
+    /* Charts */
     function buildCharts(){
       // Chart 1
       const ctx1 = document.getElementById('chart1').getContext('2d');
