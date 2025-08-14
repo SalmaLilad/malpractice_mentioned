@@ -1,4 +1,4 @@
-<!-- Malpractice Mentioned - Ready-to-deploy GitHub Pages site (single HTML file) -->
+<!-- Malpractice Mentioned - Ready-to-deploy GitHub Pages site (single HTML file)
 
 <!doctype html>
 <html lang="en">
@@ -11,9 +11,10 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root{
-      --primary: #10183a;
-      --accent: #f08aa0;
-      --muted: #f2f2f4;
+      /* Colors pulled from your logo: adjust as desired */
+      --primary: #10183a; /* deep navy */
+      --accent: #f08aa0;  /* soft pink */
+      --muted: #f2f2f4;   /* soft background */
       --card: #ffffff;
       --text: #0f1b2b;
       --caption: #596372;
@@ -44,7 +45,7 @@
     .fact .n{font-size:20px;font-weight:700;color:var(--primary)}
 
     /* Statistics */
-    .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:18px}
+    .charts{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
     .charts canvas{width:100%!important}
 
     /* Case Studies*/
@@ -57,6 +58,7 @@
     .case-item p{margin:0;color:var(--caption);font-size:14px}
     .case-item .meta{margin-top:10px;font-size:13px;color:#334155}
 
+    /* Responsive */
     @media (max-width:1000px){
       .hero{grid-template-columns:1fr}
       .case-grid-inner{grid-template-columns:repeat(2,1fr)}
@@ -69,6 +71,7 @@
 
     footer{margin-top:28px;padding:18px 0;text-align:center;color:var(--caption);font-size:14px}
 
+    /* small utility */
     .muted{color:var(--caption)}
     .edit-note{font-size:13px;color:#7b8790;margin-top:8px}
   </style>
@@ -113,7 +116,7 @@
 
       <section id="statistics" class="card">
         <h2 style="margin-top:0">Statistics & charts</h2>
-        <p class="muted">Interactive charts below. Update the `dataConfig` object in the JS to change the data.</p>
+        <p class="muted">Interactive charts below. Update the dataConfig object in the JS to change the data.</p>
         <div class="charts">
           <div class="card">
             <h3 style="margin-top:0">Misdiagnosis rates by condition</h3>
@@ -127,37 +130,6 @@
             <div class="muted" style="margin-top:8px">Caption: Time (weeks) from symptom onset to diagnosis, women vs men.</div>
           </div>
 
-          <!-- New Tableau Embed -->
-          <div class="card">
-            <h3 style="margin-top:0">Additional Data Visualization</h3>
-            <div class='tableauPlaceholder' id='viz169' style='position: relative'>
-              <noscript>
-                <a href='#'><img alt='Tableau graph' src='https://public.tableau.com/static/images/YOUR_IMAGE' style='border: none' /></a>
-              </noscript>
-              <object class='tableauViz' style='display:none;'>
-                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-                <param name='embed_code_version' value='3' />
-                <param name='path' value='YOUR_WORKBOOK_PATH' />
-                <param name='toolbar' value='yes' />
-                <param name='static_image' value='https://public.tableau.com/static/images/YOUR_IMAGE' />
-                <param name='animate_transition' value='yes' />
-                <param name='display_static_image' value='yes' />
-                <param name='display_spinner' value='yes' />
-                <param name='display_overlay' value='yes' />
-                <param name='display_count' value='yes' />
-                <param name='language' value='en-US' />
-              </object>
-            </div>
-            <script type='text/javascript'>                    
-              var divElement = document.getElementById('viz169');                    
-              var vizElement = divElement.getElementsByTagName('object')[0];                    
-              vizElement.style.width='100%';vizElement.style.height='500px';                    
-              var scriptElement = document.createElement('script');                    
-              scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
-              vizElement.parentNode.insertBefore(scriptElement, vizElement);                
-            </script>
-          </div>
-
         </div>
       </section>
 
@@ -165,12 +137,14 @@
         <h2 style="margin-top:0">Case studies</h2>
         <p class="muted">Personal stories from patients who experienced bias or delayed care. You can add your own entries in the JavaScript array below.</p>
 
-        <div class="case-grid-inner" id="caseGrid"></div>
+        <div class="case-grid-inner" id="caseGrid">
+          <!-- case items will be injected here by JS -->
+        </div>
       </section>
 
       <section id="about" class="card" style="margin-top:18px">
         <h2 style="margin-top:0">About & Learn more</h2>
-        <p class="muted">This site is curated by Malpractice Mentioned, a public-interest project bringing together research and patient stories about gender bias in healthcare.</p>
+        <p class="muted">This site is curated by Malpractice Mentioned, a public-interest project bringing together research and patient stories about gender bias in healthcare. Sources used for the charts are listed inline in the data config comments.</p>
       </section>
 
       <footer>
@@ -180,53 +154,86 @@
   </div>
 
   <script>
+
     const dataConfig = {
-      chart1: { labels: ['Heart disease','Autoimmune','Chronic pain','Mental health','Lyme'], women: [42,55,68,40,50], men: [28,30,35,35,33] },
-      chart2: { labels: ['Fibromyalgia','Endometriosis','Cardiac (women)','Migraine'], women: [52,78,10,30], men: [12,14,7,18] }
+      // Chart 1: misdiagnosis rates by condition (example/sample numbers)
+      chart1: {
+        labels: ['Heart disease','Autoimmune','Chronic pain','Mental health','Lyme'],
+        women: [42, 55, 68, 40, 50],
+        men:   [28, 30, 35, 35, 33]
+      },
+      // Chart 2: average weeks to diagnosis
+      chart2: {
+        labels: ['Fibromyalgia','Endometriosis','Cardiac (women)','Migraine'],
+        women: [52, 78, 10, 30],
+        men:   [12, 14, 7, 18]
+      }
     }
 
     const caseStudies = [
-      { name: 'Sofia Martinez', issue: 'Delayed diagnosis of endometriosis', story: 'Sofia experienced years of pelvic pain...', image: null },
-      { name: 'Aisha Khan', issue: 'Dismissed chest pain', story: 'Aisha repeatedly reported chest discomfort...', image: null },
+      // Example entries - replace these with real names, issues and stories
+      { name: 'Sofia Martinez', issue: 'Delayed diagnosis of endometriosis', story: 'Sofia experienced years of pelvic pain and was told her symptoms were "just period pain." After multiple ER visits she finally received imaging and surgery that confirmed advanced endometriosis.', image: null },
+      { name: 'Aisha Khan', issue: 'Dismissed chest pain', story: 'Aisha repeatedly reported chest discomfort and was labeled as anxiety. A later cardiac workup found she had coronary microvascular dysfunction that had been missed.', image: null },
+      { name: 'Grace Liu', issue: 'Under-treated chronic pain', story: 'Grace\'s reports of worsening pain were minimized; she faced long delays before receiving a pain management plan tailored to her condition.', image: null },
+      { name: 'Rita Gomez', issue: 'Post-surgical complications overlooked', story: 'Following a surgery, Rita\'s persistent symptoms were treated as normal recovery until a late diagnosis of infection required extended treatment.', image: null },
+      { name: 'You (add your story)', issue: 'Your issue here', story: 'Placeholder — replace with a short description of the experience.', image: null },
+      { name: 'You (add your story)', issue: 'Your issue here', story: 'Placeholder — replace with a short description of the experience.', image: null },
     ];
 
+    /* Render Case Studies */
     function renderCases(){
       const grid = document.getElementById('caseGrid');
       grid.innerHTML = '';
-      caseStudies.forEach(c=>{
+      caseStudies.forEach((c,idx)=>{
         const div = document.createElement('div');
         div.className = 'case-item card';
-        div.innerHTML = `<div class="heading">Case Study</div>
-          ${c.image ? `<img src="${c.image}" alt="${c.name}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px">` : ''}
-          <h3>${c.name}</h3>
-          <div class="meta"><strong>${c.issue}</strong></div>
-          <p style="margin-top:12px">${c.story}</p>`;
+        div.innerHTML = 
+          <div class="heading">Case Study</div>
+          ${c.image ? <img src="${c.image}" alt="${escapeHtml(c.name)}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px"> : ''}
+          <h3>${escapeHtml(c.name)}</h3>
+          <div class="meta"><strong>${escapeHtml(c.issue)}</strong></div>
+          <p style="margin-top:12px">${escapeHtml(c.story)}</p>
+        ;
         grid.appendChild(div);
       });
     }
 
+    function escapeHtml(text){
+      if(!text) return '';
+      return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;').replace(/'/g,'&#039;');
+    }
+
+    renderCases();
+
+    /* Charts */
     function buildCharts(){
-      new Chart(document.getElementById('chart1'),{
+      // Chart 1
+      const ctx1 = document.getElementById('chart1').getContext('2d');
+      new Chart(ctx1,{
         type:'bar',
-        data:{labels:dataConfig.chart1.labels,datasets:[
-          {label:'Women',data:dataConfig.chart1.women,backgroundColor:'rgba(240,138,160,0.9)'},
-          {label:'Men',data:dataConfig.chart1.men,backgroundColor:'rgba(16,24,58,0.9)'}
-        ]},
-        options:{responsive:true,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true}}}
+        data:{
+          labels: dataConfig.chart1.labels,
+          datasets:[
+            {label:'Women',data:dataConfig.chart1.women, backgroundColor: 'rgba(240,138,160,0.9)'},
+            {label:'Men', data:dataConfig.chart1.men,  backgroundColor: 'rgba(16,24,58,0.9)'}
+          ]
+        },
+        options:{responsive:true,plugins:{legend:{position:'top'}},scales:{x:{grid:{display:false}},y:{beginAtZero:true}}}
       });
 
-      new Chart(document.getElementById('chart2'),{
+      // Chart 2
+      const ctx2 = document.getElementById('chart2').getContext('2d');
+      new Chart(ctx2,{
         type:'line',
-        data:{labels:dataConfig.chart2.labels,datasets:[
-          {label:'Women',data:dataConfig.chart2.women,fill:true,tension:0.3,backgroundColor:'rgba(240,138,160,0.18)',borderColor:'rgba(240,138,160,0.95)'},
-          {label:'Men',data:dataConfig.chart2.men,fill:false,tension:0.3,borderColor:'rgba(16,24,58,0.95)'}
-        ]},
+        data:{labels:dataConfig.chart2.labels,datasets:[{label:'Women',data:dataConfig.chart2.women,fill:true,tension:0.3,backgroundColor:'rgba(240,138,160,0.18)',borderColor:'rgba(240,138,160,0.95)'},{label:'Men',data:dataConfig.chart2.men,fill:false,tension:0.3,borderColor:'rgba(16,24,58,0.95)'}]},
         options:{responsive:true,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true}}}
       });
     }
 
-    renderCases();
     buildCharts();
+
+    /*  Helpful tips for GitHub deployment  */
+    console.log('Site loaded — edit caseStudies and dataConfig arrays inside the HTML to customize content.');
   </script>
 </body>
 </html>
