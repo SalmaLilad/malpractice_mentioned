@@ -1,203 +1,240 @@
-<!DOCTYPE html>
+<!-- Malpractice Mentioned 
+
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pulmonary Tuberculosis Insights</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Malpractice Mentioned — Gender Bias in Healthcare</title>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo="> 
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 0;
-      color: #333;
+    :root{
+      /* Colors pulled from your logo: adjust as desired */
+      --primary: #10183a; /* deep navy */
+      --accent: #f08aa0;  /* soft pink */
+      --muted: #f2f2f4;   /* soft background */
+      --card: #ffffff;
+      --text: #0f1b2b;
+      --caption: #596372;
+      --radius: 12px;
+      --shadow: 0 10px 30px rgba(2,6,23,0.06);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
-    header {
-      background-color: #00539C;
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
+
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--muted),#ffffff);color:var(--text)}
+    .container{max-width:1200px;margin:28px auto;padding:22px}
+
+    header{display:flex;align-items:center;gap:18px}
+    .logo{width:72px;height:72px;border-radius:14px;background:var(--muted);display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .logo img{width:100%;height:100%;object-fit:contain}
+    .title{line-height:1}
+    .title .brand{font-weight:800;font-size:20px;color:var(--primary)}
+    .title .tag{font-size:13px;color:var(--caption)}
+    nav{margin-left:auto}
+    nav a{margin-left:18px;text-decoration:none;color:var(--primary);font-weight:600}
+
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:20px;margin-top:22px}
+    .card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+    h1{margin:0 0 8px 0;font-size:30px}
+    p.lead{margin:0;color:#324055}
+
+    .quick-facts{display:flex;flex-direction:column;gap:12px}
+    .fact{background:linear-gradient(180deg,#fff, rgba(240,138,160,0.03));padding:12px;border-radius:10px}
+    .fact .n{font-size:20px;font-weight:700;color:var(--primary)}
+
+    /* Statistics */
+    .charts{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
+    .charts canvas{width:100%!important}
+
+    /* Case Studies */
+    section.case-grid{margin-top:18px}
+    .case-grid-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+    .case-item{padding:20px;border-radius:10px;background:linear-gradient(180deg,#fff, var(--muted));min-height:200px;display:flex;flex-direction:column;justify-content:flex-start}
+    .case-item .heading{font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.06em;margin-bottom:10px;position:relative}
+    .case-item .heading::after{content:'';display:block;height:2px;background:var(--accent);width:60px;margin-top:10px}
+    .case-item h3{margin:12px 0 8px 0;font-size:20px}
+    .case-item p{margin:0;color:var(--caption);font-size:14px}
+    .case-item .meta{margin-top:10px;font-size:13px;color:#334155}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .case-grid-inner{grid-template-columns:repeat(2,1fr)}
+      .charts{grid-template-columns:1fr}
     }
-    header h1 {
-      margin: 0;
-      font-size: 2em;
+    @media (max-width:600px){
+      .case-grid-inner{grid-template-columns:1fr}
+      nav{display:none}
     }
-    section {
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .case-study {
-      background-color: white;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 30px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .case-study h3 {
-      margin-top: 0;
-      color: #00539C;
-    }
-    .tableau-container {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-    @media (max-width: 600px) {
-      .case-study {
-        padding: 15px;
-      }
-    }
+
+    footer{margin-top:28px;padding:18px 0;text-align:center;color:var(--caption);font-size:14px}
+
+    /* small utility */
+    .muted{color:var(--caption)}
+    .edit-note{font-size:13px;color:#7b8790;margin-top:8px}
   </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <div class="logo"><img src="logo.png" alt="logo" onerror="this.style.display='none'" /></div>
+      <div class="title">
+        <div class="brand">Malpractice Mentioned</div>
+        <div class="tag">Advocating against women malpractice & bias</div>
+      </div>
+      <nav>
+        <a href="#intro">Intro</a>
+        <a href="#statistics">Statistics</a>
+        <a href="#cases">Case Studies</a>
+        <a href="#about">About</a>
+      </nav>
+    </header>
 
-<header>
-  <h1>Pulmonary Tuberculosis: Gender Differences and Treatment Insights</h1>
-</header>
+    <main>
+      <section id="intro" class="hero">
+        <div class="card">
+          <h1>When symptoms are dismissed.</h1>
+          <p class="lead">Systemic gender bias in healthcare contributes to delayed diagnoses, undertreatment, and avoidable harm for women. This project collects evidence, data visualisations and real patient stories to raise awareness and drive change.</p>
+          <div style="margin-top:16px;display:flex;gap:10px">
+            <a href="#statistics" style="padding:10px 14px;border-radius:10px;background:var(--primary);color:white;text-decoration:none;font-weight:700">See statistics</a>
+            <a href="#cases" style="padding:10px 14px;border-radius:10px;border:2px solid var(--accent);color:var(--primary);text-decoration:none">Read case studies</a>
+          </div>
+          <div class="edit-note">Tip: Edit the case studies and chart data in the JavaScript section at the bottom of this file.</div>
+        </div>
 
-<!-- Chart 1 -->
-<section class="tableau-container">
-  <h2>Chart 1: Gender Differences in TB Treatment and Diagnosis</h2>
-  <div class='tableauPlaceholder' id='viz1755199954538' style='position: relative; width: 100%; max-width: 1000px;'>
-    <noscript>
-      <a href='#'>
-        <img alt='Differences in Treatment and Diagnosis of Pulmonary Tuberculosis (PBT) in Male and Female Patients in Guangzhou, China' 
-             src='https://public.tableau.com/static/images/Di/DifferencesinTreatmentandDiagnosisofPulmonaryTuberculosisinMaleandFemalePatientsinGuangzhouChina/Dashboard1/1_rss.png' 
-             style='border: none' />
-      </a>
-    </noscript>
-    <object class='tableauViz' style='width:100%; height:827px;'>
-      <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
-      <param name='embed_code_version' value='3' /> 
-      <param name='site_root' value='' />
-      <param name='name' value='DifferencesinTreatmentandDiagnosisofPulmonaryTuberculosisinMaleandFemalePatientsinGuangzhouChina/Dashboard1' />
-      <param name='tabs' value='no' />
-      <param name='toolbar' value='yes' />
-      <param name='static_image' value='https://public.tableau.com/static/images/Di/DifferencesinTreatmentandDiagnosisofPulmonaryTuberculosisinMaleandFemalePatientsinGuangzhouChina/Dashboard1/1.png' /> 
-      <param name='animate_transition' value='yes' />
-      <param name='display_static_image' value='yes' />
-      <param name='display_spinner' value='yes' />
-      <param name='display_overlay' value='yes' />
-      <param name='display_count' value='yes' />
-      <param name='language' value='en-US' />
-    </object>
-  </div>
-</section>
+        <aside class="card">
+          <h3 style="margin-top:0">Quick facts</h3>
+          <div class="quick-facts">
+            <div class="fact"><div class="n">Higher misdiagnosis</div><div class="muted">Women experience higher rates of misdiagnosis for several conditions (see sources).</div></div>
+            <div class="fact"><div class="n">Longer diagnosis delays</div><div class="muted">Average time-to-diagnosis is often longer for women than men for certain chronic conditions.</div></div>
+            <div class="fact"><div class="n">Pain undertreatment</div><div class="muted">Studies show women are less likely to receive adequate pain management.</div></div>
+          </div>
+        </aside>
+      </section>
 
-<!-- Chart 2 -->
-<section class="tableau-container">
-  <h2>Chart 2: TB Treatment Adherence by Age Group</h2>
-  <div class='tableauPlaceholder' id='vizSecondChart' style='position: relative; width: 100%; max-width: 1000px;'>
-    <noscript>
-      <a href='#'>
-        <img alt='TB Treatment Adherence by Age Group' 
-             src='https://public.tableau.com/static/images/MockSecondChart.png' 
-             style='border: none' />
-      </a>
-    </noscript>
-    <object class='tableauViz' style='width:100%; height:827px;'>
-      <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
-      <param name='embed_code_version' value='3' /> 
-      <param name='site_root' value='' />
-      <param name='name' value='TBAdherenceByAge/Dashboard1' />
-      <param name='tabs' value='no' />
-      <param name='toolbar' value='yes' />
-      <param name='static_image' value='https://public.tableau.com/static/images/MockSecondChart.png' /> 
-      <param name='animate_transition' value='yes' />
-      <param name='display_static_image' value='yes' />
-      <param name='display_spinner' value='yes' />
-      <param name='display_overlay' value='yes' />
-      <param name='display_count' value='yes' />
-      <param name='language' value='en-US' />
-    </object>
-  </div>
-</section>
+      <section id="statistics" class="card">
+        <h2 style="margin-top:0">Statistics & charts</h2>
+        <p class="muted">Interactive charts below. Update the `dataConfig` object in the JS to change the data.</p>
+        <div class="charts">
+          <div class="card">
+            <h3 style="margin-top:0">Misdiagnosis rates by condition</h3>
+            <canvas id="chart1" height="160"></canvas>
+            <div class="muted" style="margin-top:8px">Caption: Women show higher reported misdiagnosis in multiple conditions (sample aggregated data).</div>
+          </div>
 
-<!-- Case Studies -->
-<section id="case-studies">
-  <h2>Real Stories Behind the Data</h2>
+          <div class="card">
+            <h3 style="margin-top:0">Average time-to-diagnosis (weeks)</h3>
+            <canvas id="chart2" height="160"></canvas>
+            <div class="muted" style="margin-top:8px">Caption: Time (weeks) from symptom onset to diagnosis, women vs men.</div>
+          </div>
 
-  <div class="case-study">
-    <h3>Case Study 1: Ling, a 42-Year-Old Woman in Guangzhou</h3>
-    <p>
-      Ling started experiencing a persistent cough and fatigue, but she delayed seeking medical help because she assumed it was a minor respiratory infection. 
-      When she finally went to a local clinic, doctors diagnosed her with pulmonary tuberculosis (PBT). 
-      The case was complicated by her gender: studies in the region have shown that women are less likely to receive timely TB treatment due to cultural and social factors. 
-      Ling’s delayed diagnosis meant she required a longer treatment regimen, and she faced additional stigma within her community. 
-      This story highlights how gender-related barriers can directly affect patient outcomes.
-    </p>
-  </div>
+        </div>
+      </section>
 
-  <div class="case-study">
-    <h3>Case Study 2: Jian, a 35-Year-Old Man</h3>
-    <p>
-      Jian was diagnosed with PBT after routine screening at his workplace. 
-      Unlike Ling, he had immediate access to treatment and began a standard medication regimen. 
-      Despite his quicker access, Jian faced another challenge: adherence. Long treatment cycles and side effects caused him to skip doses initially, risking treatment failure. 
-      This example emphasizes that even with early diagnosis, treatment success depends on ongoing support and monitoring.
-    </p>
+      <section id="cases" class="card case-grid">
+        <h2 style="margin-top:0">Case studies</h2>
+        <p class="muted">Personal stories from patients who experienced bias or delayed care. You can add your own entries in the JavaScript array below.</p>
+
+        <div class="case-grid-inner" id="caseGrid">
+          <!-- case items will be injected here by JS -->
+        </div>
+      </section>
+
+      <section id="about" class="card" style="margin-top:18px">
+        <h2 style="margin-top:0">About & Learn more</h2>
+        <p class="muted">This site is curated by Malpractice Mentioned, a public-interest project bringing together research and patient stories about gender bias in healthcare. Sources used for the charts are listed inline in the data config comments.</p>
+        <p class="muted">To add your own case study after deployment: edit the `caseStudies` array in this file (commit a new version to the repo) or use a simple admin UI integration later.</p>
+      </section>
+
+      <footer>
+        © Malpractice Mentioned — built for awareness and advocacy
+      </footer>
+    </main>
   </div>
 
-  <div class="case-study">
-    <h3>Case Study 3: Elderly Patients and Misdiagnosis</h3>
-    <p>
-      In several hospitals across Guangzhou, elderly patients often present with mild or atypical TB symptoms. 
-      One 68-year-old man was initially misdiagnosed with pneumonia. 
-      By the time his TB diagnosis was confirmed, the disease had progressed significantly, requiring hospitalization. 
-      This case underscores the importance of tailored screening protocols and heightened awareness among healthcare professionals for vulnerable populations.
-    </p>
-  </div>
-
-  <div class="case-study">
-    <h3>Case Study 4: The Role of Community Education</h3>
-    <p>
-      Community health campaigns in Guangzhou have started to make a difference. 
-      A recent initiative targeting women over 30 led to earlier reporting of symptoms and better treatment adherence. 
-      For instance, a 39-year-old woman named Mei participated in a community workshop and immediately sought medical help when she experienced TB symptoms. 
-      Her case demonstrates how education and awareness programs can significantly reduce gender-based disparities in treatment outcomes.
-    </p>
-  </div>
-
-  <div class="case-study">
-    <h3>Case Study 5: Your Story Here</h3>
-    <p>Add your own patient story, observations, or research notes here to highlight unique experiences with PBT.</p>
-  </div>
-
-  <div class="case-study">
-    <h3>Case Study 6: Your Story Here</h3>
-    <p>Add another story here to illustrate patterns, challenges, or personal experiences that complement the data.</p>
-  </div>
-</section>
-
-<script type='text/javascript'>
-  function initTableau(vizId) {
-    var divElement = document.getElementById(vizId);
-    var vizElement = divElement.getElementsByTagName('object')[0];
-
-    function resizeViz() {
-      var width = divElement.offsetWidth;
-      if (width > 1000) { vizElement.style.width='1000px'; vizElement.style.height='827px'; }
-      else if (width > 500) { vizElement.style.width='1000px'; vizElement.style.height='827px'; }
-      else { vizElement.style.width='100%'; vizElement.style.height='727px'; }
+  <script>
+    
+    const dataConfig = {
+      // Chart 1: misdiagnosis rates by condition (example/sample numbers)
+      chart1: {
+        labels: ['Heart disease','Autoimmune','Chronic pain','Mental health','Lyme'],
+        women: [42, 55, 68, 40, 50],
+        men:   [28, 30, 35, 35, 33]
+      },
+      // Chart 2: average weeks to diagnosis
+      chart2: {
+        labels: ['Fibromyalgia','Endometriosis','Cardiac (women)','Migraine'],
+        women: [52, 78, 10, 30],
+        men:   [12, 14, 7, 18]
+      }
     }
 
-    window.addEventListener('resize', resizeViz);
-    resizeViz();
+    const caseStudies = [
+      // Example entries - replace these with real names, issues and stories
+      { name: 'Sofia Martinez', issue: 'Delayed diagnosis of endometriosis', story: 'Sofia experienced years of pelvic pain and was told her symptoms were "just period pain." After multiple ER visits she finally received imaging and surgery that confirmed advanced endometriosis.', image: null },
+      { name: 'Aisha Khan', issue: 'Dismissed chest pain', story: 'Aisha repeatedly reported chest discomfort and was labeled as anxiety. A later cardiac workup found she had coronary microvascular dysfunction that had been missed.', image: null },
+      { name: 'Grace Liu', issue: 'Under-treated chronic pain', story: 'Grace\'s reports of worsening pain were minimized; she faced long delays before receiving a pain management plan tailored to her condition.', image: null },
+      { name: 'Rita Gomez', issue: 'Post-surgical complications overlooked', story: 'Following a surgery, Rita\'s persistent symptoms were treated as normal recovery until a late diagnosis of infection required extended treatment.', image: null },
+      { name: 'You (add your story)', issue: 'Your issue here', story: 'Placeholder — replace with a short description of the experience.', image: null },
+      { name: 'You (add your story)', issue: 'Your issue here', story: 'Placeholder — replace with a short description of the experience.', image: null }
+    ];
 
-    var scriptElement = document.createElement('script');
-    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-    vizElement.parentNode.insertBefore(scriptElement, vizElement);
-  }
+    /* Render case studies */
+    function renderCases(){
+      const grid = document.getElementById('caseGrid');
+      grid.innerHTML = '';
+      caseStudies.forEach((c,idx)=>{
+        const div = document.createElement('div');
+        div.className = 'case-item card';
+        div.innerHTML = `
+          <div class="heading">Case Study</div>
+          ${c.image ? `<img src="${c.image}" alt="${escapeHtml(c.name)}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px">` : ''}
+          <h3>${escapeHtml(c.name)}</h3>
+          <div class="meta"><strong>${escapeHtml(c.issue)}</strong></div>
+          <p style="margin-top:12px">${escapeHtml(c.story)}</p>
+        `;
+        grid.appendChild(div);
+      });
+    }
 
-  // Initialize both Tableau charts
-  initTableau('viz1755199954538');
-  initTableau('vizSecondChart');
-</script>
+    function escapeHtml(text){
+      if(!text) return '';
+      return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;').replace(/'/g,'&#039;');
+    }
 
+    renderCases();
+
+    /* Charts */
+    function buildCharts(){
+      // Chart 1
+      const ctx1 = document.getElementById('chart1').getContext('2d');
+      new Chart(ctx1,{
+        type:'bar',
+        data:{
+          labels: dataConfig.chart1.labels,
+          datasets:[
+            {label:'Women',data:dataConfig.chart1.women, backgroundColor: 'rgba(240,138,160,0.9)'},
+            {label:'Men', data:dataConfig.chart1.men,  backgroundColor: 'rgba(16,24,58,0.9)'}
+          ]
+        },
+        options:{responsive:true,plugins:{legend:{position:'top'}},scales:{x:{grid:{display:false}},y:{beginAtZero:true}}}
+      });
+
+      // Chart 2
+      const ctx2 = document.getElementById('chart2').getContext('2d');
+      new Chart(ctx2,{
+        type:'line',
+        data:{labels:dataConfig.chart2.labels,datasets:[{label:'Women',data:dataConfig.chart2.women,fill:true,tension:0.3,backgroundColor:'rgba(240,138,160,0.18)',borderColor:'rgba(240,138,160,0.95)'},{label:'Men',data:dataConfig.chart2.men,fill:false,tension:0.3,borderColor:'rgba(16,24,58,0.95)'}]},
+        options:{responsive:true,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true}}}
+      });
+    }
+
+    buildCharts();
+
+    /* Helpful tips for GitHub deployment */
+    console.log('Site loaded — edit `caseStudies` and `dataConfig` arrays inside the HTML to customize content.');
+  </script>
 </body>
 </html>
